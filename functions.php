@@ -27,7 +27,15 @@ class bne_rest_api_theme
      */
     function __construct()
     {
-        add_action('init', array($this, 'init'));
+        add_action('init',                  array($this, 'init'));
+
+        add_action('do_feed',               array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_rdf',           array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_rss',           array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_rss2',          array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_atom',          array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_rss2_comments', array( $this, 'disable_feed'), 1 );
+        add_action('do_feed_atom_comments', array( $this, 'disable_feed'), 1 );
 
     }
 
@@ -90,6 +98,11 @@ class bne_rest_api_theme
 
         return $data;
     }
+
+    function disable_feed() {
+        die('Not available');
+    }
+
 
 }
 
