@@ -75,6 +75,16 @@ class bne_rest_api_theme
 
         }
 
+        register_taxonomy(
+            'link-types',
+            'link',
+            array(
+                'label' => __( 'Link Types' ),
+                'rewrite' => array( 'slug' => 'link-types' ),
+                'show_in_rest' => true,
+            )
+        );
+
     }
 
 
@@ -93,7 +103,7 @@ class bne_rest_api_theme
         $response_data = $data->get_data();
 
         $response_data['_meta'] = get_post_meta($response_data['id']);
-
+        $response_data['_terms'] = wp_get_post_terms( $response_data['id'], 'link-types' );
         $data->set_data($response_data);
 
         return $data;

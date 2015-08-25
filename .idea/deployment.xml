@@ -5,7 +5,7 @@
       <paths name="BNE Communications">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/themes/communication-back" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
