@@ -39,6 +39,28 @@ class bne_rest_api_theme
 
     }
 
+    function initB(){
+	
+	add_filter("rest_prepare_post", array($this, 'rest_prepare'));
+
+	global $wp_post_types;    
+
+	foreach ( $this->custom_post_types as $post_type_name ) {
+		
+		if ( isset( $wp_post_types[$post_type_name] ) ) {
+
+			 $slug = sanitize_title_with_dashes($post_type_name);
+
+			$wp_post_types[$post_type_name]->show_in_rest = true;
+	  		$wp_post_types[$post_type_name]->rest_base = $post_type_name;
+  			$wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
+
+			add_filter("rest_prepare_{$slug}", array($this, 'rest_prepare'));
+		}
+		
+	}
+    }
+
     function init()
     {
 
@@ -82,6 +104,8 @@ class bne_rest_api_theme
                 'label' => __( 'Link Types' ),
                 'rewrite' => array( 'slug' => 'link-types' ),
                 'show_in_rest' => true,
+		'rest_base' => 'link-types',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
             )
         );
 
@@ -97,7 +121,7 @@ class bne_rest_api_theme
      * @param $request
      * @return mixed
      */
-    function rest_prepare($data, $post, $request = 0)
+    function rest_prepare($data, $post = null, $request = 0)
     {
 
         $response_data = $data->get_data();
